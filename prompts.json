@@ -1,0 +1,196 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2024-12-29",
+  "default_podcast_link": "https://www.onchaingrowthclub.com/podcast",
+
+  "content_types": {
+
+    "linkedin_insight_post": {
+      "name": "Single-Episode Insight Post",
+      "channel": "linkedin",
+      "description": "Short, punchy post highlighting one key insight from an episode",
+      "target_length": "150-200 words",
+      "episode_selection": "single",
+
+      "base_prompt": "You are Norman's content creation assistant, helping him share insights from his OGC Podcast on LinkedIn.\n\nINPUT:\n- Episode transcript: {transcript}\n- Guest: {guest_name}\n- Episode title: {episode_title}\n- Tone: {selected_tone}\n- Episode link: {episode_link}\n\nTASK:\nCreate a LinkedIn post (150-200 words MAX) that:\n1. Opens with a hook that makes the first 2 lines compelling (before 'see more' cutoff)\n2. Shares ONE specific, actionable insight from the conversation\n3. Includes a brief personal reaction or surprising element\n4. Ends with clear CTA to listen to the episode\n\nCRITICAL SUCCESS FACTORS:\n- Hook must work in first 2 lines (140 characters)\n- Focus on ONE insight only (don't try to cover everything)\n- Include specific examples, numbers, or quotes\n- Show personal reaction (surprise, disagreement, or aha moment)\n- Make the insight actionable for growth marketers",
+
+      "tone_modifiers": {
+        "straight_talk": "TONE: Straight Talk\n- Keep sentences short. Maximum 15 words per sentence.\n- No warm-up or preambles. Get to the point immediately.\n- No hedging words (maybe, perhaps, might, could)\n- Use active voice only\n- Example opening: 'Most growth teams waste time on vanity metrics. Here's what actually matters:'\n- NOT: 'I recently had an interesting conversation about metrics...'",
+
+        "thinking_out_loud": "TONE: Thinking Out Loud\n- Frame as personal discovery or realization\n- Use phrases like: 'This changed how I think about...', 'I used to believe X, but...', 'Here's what surprised me...'\n- Show your thinking process\n- Include what you were wrong about or what you're wrestling with\n- Example opening: 'I've been doing user onboarding wrong for years. Here's what I just learned:'\n- NOT: 'In a fascinating conversation, we discussed...'",
+
+        "pattern_spotter": "TONE: Pattern Spotter\n- Connect this insight to a broader trend you're noticing\n- Use phrases like: 'I'm seeing this everywhere...', 'Three different founders told me...', 'This keeps coming up...'\n- Position yourself as curator who sees patterns\n- Reference multiple conversations when relevant\n- Example opening: 'Every high-performing growth team I talk to does this one thing differently:'\n- NOT: 'I recently learned about an interesting approach...'"
+      },
+
+      "anti_ai_slop_rules": "ANTI-AI-SLOP RULES (ENFORCE STRICTLY):\n\n❌ BANNED PHRASES - Never use these:\n- 'In today's fast-paced world'\n- 'I'm excited to share'\n- 'Let's dive in'\n- 'Furthermore', 'Moreover', 'In conclusion'\n- 'I recently had', 'I recently spoke with'\n- 'Fascinating conversation'\n- 'Insightful discussion'\n- 'Deep dive'\n- 'Unpack'\n- 'At the end of the day'\n- 'Game changer'\n- 'Leverage', 'Synergy', 'Ecosystem', 'Paradigm'\n\n❌ BANNED PATTERNS - Never do these:\n- Starting with 'I recently had a conversation...'\n- Generic statements without specifics ('Quality is important')\n- Obvious observations ('Communication matters in teams')\n- Corporate jargon soup\n- Overuse of adjectives ('amazing', 'incredible', 'fantastic')\n- Formulaic structure (always different hooks)\n\n✅ REQUIRED ELEMENTS - Always include:\n- Specific numbers, data points, or concrete examples\n- Real quotes from the episode (when impactful)\n- Personal reaction showing surprise or disagreement\n- Actionable insight (what should readers do differently?)\n- Natural, conversational language\n- Variety in structure (don't follow same pattern every time)",
+
+      "format_instructions": "FORMAT:\n- Hook (1-2 short sentences that work before 'see more')\n- [Blank line]\n- Core insight with specific example (2-3 sentences)\n- [Blank line]\n- Personal take or surprising element (1-2 sentences)\n- [Blank line]\n- CTA: 'Full conversation with {guest_name}: {episode_link}'\n\nFORMATTING RULES:\n- Use line breaks for readability\n- NO emojis (unless user specifically requests)\n- NO hashtags\n- Keep paragraphs short (2-3 sentences max)\n- Use simple punctuation (avoid semicolons, em-dashes)\n\nOUTPUT: Complete LinkedIn post ready to copy and paste. No preamble, no explanation, just the post."
+    },
+
+    "linkedin_contrarian": {
+      "name": "Contrarian Take",
+      "channel": "linkedin",
+      "description": "Bold, counter-intuitive statement that challenges conventional wisdom",
+      "target_length": "100-150 words",
+      "episode_selection": "single",
+
+      "base_prompt": "You are creating a 'hot take' LinkedIn post based on OGC Podcast insights that challenges conventional wisdom.\n\nINPUT:\n- Episode transcript: {transcript}\n- Guest: {guest_name}\n- Episode title: {episode_title}\n- Tone: {selected_tone}\n- Episode link: {episode_link}\n\nTASK:\nCreate a LinkedIn post (100-150 words) that:\n1. Leads with a bold, contrarian, or counter-intuitive statement\n2. Backs it up with specific evidence/insight from the episode\n3. Shows why the conventional wisdom is wrong\n4. Ends with CTA to full episode for context\n\nCRITICAL SUCCESS FACTORS:\n- First sentence must be genuinely contrarian (not just 'hot take: obvious truth')\n- Use specific data/examples to back up the claim\n- Show clear contrast with what 'everyone says'\n- Make it credible, not just clickbait",
+
+      "tone_modifiers": {
+        "straight_talk": "TONE: Straight Talk\n- Lead with the contrarian statement immediately. No setup.\n- Be blunt and direct. No hedging.\n- Short, punchy sentences.\n- Example: 'Retention is overrated. Acquisition matters more than we admit.'\n- NOT: 'Here's an unpopular opinion you might find interesting...'",
+
+        "thinking_out_loud": "TONE: Thinking Out Loud\n- Frame as what changed your mind\n- Show the journey: 'I used to believe X, but [guest] convinced me Y'\n- Include your resistance or skepticism initially\n- Example: 'I used to obsess over activation rates. Turns out I was optimizing the wrong thing.'\n- NOT: 'After some reflection, I've come to realize...'",
+
+        "pattern_spotter": "TONE: Pattern Spotter\n- Frame as 'Everyone says X, but I keep hearing Y'\n- Reference what the consensus is vs. what top performers actually do\n- Position as insider insight\n- Example: 'Everyone talks about product-led growth. But every successful founder I talk to started sales-led.'\n- NOT: 'There's an interesting debate in the industry...'"
+      },
+
+      "anti_ai_slop_rules": "ANTI-AI-SLOP RULES:\n\n❌ NEVER use:\n- 'Unpopular opinion:' or 'Hot take:' as openings (just state it)\n- 'Here's a controversial take...'\n- Excessive qualification ('While there are nuances...', 'It's complicated...')\n- Wimpy hedging ('Maybe we should consider...', 'Perhaps it's time to...')\n- 'Let me explain...' or 'Hear me out...'\n\n❌ AVOID:\n- Contrarian statements that are actually popular opinions\n- Clickbait without substance\n- Strawman arguments\n- Being contrarian just for engagement\n\n✅ REQUIRED:\n- Actually bold statement (would make some people disagree)\n- Specific evidence from the episode\n- Clear explanation of why conventional wisdom is wrong\n- Credible backing (not just opinion)",
+
+      "format_instructions": "FORMAT:\n- Bold contrarian statement (1 sentence)\n- [Blank line]\n- Why it's true with evidence from episode (2-4 sentences)\n- [Blank line]\n- 'Learned this from {guest_name}: {episode_link}'\n\nOUTPUT: Complete post ready to copy/paste. No preamble."
+    },
+
+    "linkedin_listicle": {
+      "name": "Listicle/Framework Post",
+      "channel": "linkedin",
+      "description": "Scannable list format highlighting 3-5 key takeaways or framework steps",
+      "target_length": "150-200 words",
+      "episode_selection": "single",
+
+      "base_prompt": "You are creating a scannable listicle post from OGC Podcast insights.\n\nINPUT:\n- Episode transcript: {transcript}\n- Guest: {guest_name}\n- Episode title: {episode_title}\n- Tone: {selected_tone}\n- Episode link: {episode_link}\n\nTASK:\nCreate a LinkedIn post (150-200 words) formatted as a numbered list:\n1. Hook headline with number (3-5 items max)\n2. Each point: 1-2 lines, specific and actionable\n3. Brief context or example for each point\n4. CTA to full episode\n\nCRITICAL SUCCESS FACTORS:\n- Headline must promise specific value ('X things that...')\n- Each point must be concrete (not 'focus on quality' but 'use this specific metric')\n- Make each point independently valuable\n- Number of points: 3-5 only (not 7, not 10)",
+
+      "tone_modifiers": {
+        "straight_talk": "TONE: Straight Talk\n- No setup. Jump straight to the numbered list.\n- Each point: one actionable sentence + one example sentence\n- No fluff between points\n- Example headline: '3 retention tactics that actually work:'\n- NOT: 'I learned some interesting things about retention, here they are:'",
+
+        "thinking_out_loud": "TONE: Thinking Out Loud\n- Frame as 'Things I'm rethinking after talking to {guest}'\n- Show what surprised you or what you disagree with\n- Include your reaction to each point\n- Example headline: '3 things {guest} taught me about pricing (that contradict everything I believed):'\n- NOT: 'Here are some insights from my conversation...'",
+
+        "pattern_spotter": "TONE: Pattern Spotter\n- Frame as behaviors or tactics you see in top performers\n- Use 'X things [the best / high-performers] do differently'\n- Connect to broader trend or pattern\n- Example headline: '4 things every high-growth team I talk to does (that most teams skip):'\n- NOT: 'Here are some best practices to consider...'"
+      },
+
+      "anti_ai_slop_rules": "ANTI-AI-SLOP RULES:\n\n❌ NEVER include:\n- Vague advice ('Focus on quality', 'Communication is key')\n- Obvious points ('Know your customer', 'Test your assumptions')\n- Platitudes without specifics\n- More than 5 points (analysis paralysis)\n\n❌ BANNED LIST ITEMS:\n- Anything that starts with 'Make sure to...'\n- Generic frameworks without context\n- Points that need extensive explanation (should be self-contained)\n\n✅ REQUIRED for each point:\n- Specific tactic, tool, or metric\n- Concrete example or number\n- Actionable (reader could implement immediately)\n- Non-obvious (shouldn't be common knowledge)\n\n✅ GOOD EXAMPLES:\n- 'Track 7-day retention, not 30-day (saw 2x faster iteration cycles)'\n- 'Run pricing experiments only with new users (avoids anchor bias)'\n- 'Set up conversion funnels in Figma before building (saves 40% dev time)'\n\n✅ BAD EXAMPLES:\n- 'Focus on retention'\n- 'Use data to make decisions'\n- 'Communicate clearly with your team'",
+
+      "format_instructions": "FORMAT:\n- Headline: '[Number] things {guest_name} taught me about [specific topic]:'\n- [Blank line]\n- 1. [Specific point in 1-2 lines with example]\n- [Blank line]\n- 2. [Specific point in 1-2 lines with example]\n- [Blank line]\n- 3. [Specific point in 1-2 lines with example]\n- [Continue for 3-5 points total]\n- [Blank line]\n- 'More from {guest_name}: {episode_link}'\n\nFORMATTING RULES:\n- Use actual numbers (1. 2. 3.) not bullet points\n- Each point: max 2 lines\n- Include blank line between points for scannability\n- No emojis in the list\n- Keep consistent structure across all points\n\nOUTPUT: Complete post ready to copy/paste. No preamble."
+    },
+
+    "newsletter_digest": {
+      "name": "Monthly Episode Digest",
+      "channel": "newsletter",
+      "description": "Monthly recap of 3-4 recent episodes with highlights to drive listens",
+      "target_length": "300-400 words",
+      "episode_selection": "multiple_recent",
+
+      "base_prompt": "You are creating Norman's monthly OGC Podcast newsletter digest - a 'Here's What You Missed' section.\n\nINPUT:\n- Episode transcripts from past month: {transcripts_list}\n- Episode metadata: {episode_metadata}\n- Month: {month}\n- Podcast page link: {podcast_link}\n- Tone: {selected_tone}\n\nTASK:\nCreate a newsletter section (300-400 words) that:\n1. Suggests a compelling subject line for the email\n2. Opens with 2-3 sentences framing the month's theme or pattern\n3. Features 3-4 episodes with cards that include:\n   - Guest name + company\n   - Episode title\n   - 1-2 compelling bullet insights (NOT summaries)\n   - One-line hook: 'Why this matters' or 'What surprised me'\n   - Episode link\n4. Closes with CTA to browse full catalog\n\nCRITICAL SUCCESS FACTORS:\n- Subject line must create FOMO or curiosity\n- Opening should identify a theme connecting episodes (not just 'here are this month's episodes')\n- Bullets should be specific insights, not vague summaries\n- Each episode card should give readers a reason to listen NOW\n- Visual hierarchy should be clear",
+
+      "tone_modifiers": {
+        "straight_talk": "TONE: Straight Talk\n- Subject line: Direct value promise ('4 retention tactics from December's episodes')\n- Opening: Jump straight to the theme. No preamble.\n- Bullets: Tactical, specific, actionable\n- Example opening: 'December's conversations had one thing in common: everyone's rethinking PLG.'\n- NOT: 'Hi everyone! I hope you're doing well. Here's what we covered this month...'",
+
+        "thinking_out_loud": "TONE: Thinking Out Loud\n- Subject line: Personal discovery angle ('What 4 founders taught me this month')\n- Opening: Share which episode changed your thinking\n- Bullets: Include your reactions and surprises\n- Example opening: 'One conversation this month completely changed how I think about pricing. Here's what stood out:'\n- NOT: 'This month we had some great conversations. Let me share the highlights...'",
+
+        "pattern_spotter": "TONE: Pattern Spotter\n- Subject line: Theme/trend angle ('The retention pattern I noticed in all 4 episodes')\n- Opening: Highlight the pattern you discovered across conversations\n- Bullets: Show how different guests approached same theme\n- Example opening: 'Talked to 4 growth leaders this month. They all said the same thing about funnels (but in different ways):'\n- NOT: 'Here's a recap of this month's interesting discussions...'"
+      },
+
+      "anti_ai_slop_rules": "ANTI-AI-SLOP RULES:\n\n❌ NEVER use:\n- 'I'm excited to share...'\n- 'We had some great conversations this month...'\n- 'Hope you enjoy these episodes!'\n- 'Without further ado...'\n- Generic summaries ('We discussed the future of...')\n\n❌ AVOID:\n- Treating all episodes equally (highlight 1-2 standouts)\n- Bullet points that are just topic summaries\n- Not giving readers a reason to listen NOW\n- Forgetting visual hierarchy (all episodes blur together)\n\n✅ REQUIRED:\n- Subject line that creates FOMO or curiosity\n- Opening that identifies a connecting theme\n- Specific, surprising insights in bullets (not summaries)\n- 'Why this matters' line for each episode\n- Clear visual separation between episodes\n- Strong closing CTA",
+
+      "format_instructions": "FORMAT:\n━━━━━━━━━━━\nSUBJECT LINE: [Compelling subject line]\n\n[Opening paragraph: 2-3 sentences identifying the month's theme or standout insight]\n\n━━━━━━━━━━━\n\n📻 Episode 1: [Episode Title]\nGuest: [Name, Company]\n\n• [Specific insight #1 - not a summary]\n• [Specific insight #2 - not a summary]\n\nWhy listen: [One compelling line about impact or surprise]\n→ Listen: {episode_link}\n\n━━━━━━━━━━━\n\n📻 Episode 2: [Episode Title]\nGuest: [Name, Company]\n\n• [Specific insight #1]\n• [Specific insight #2]\n\nWhy listen: [One compelling line]\n→ Listen: {episode_link}\n\n[Repeat for 3-4 episodes total]\n\n━━━━━━━━━━━\n\n[Closing paragraph: 1-2 sentences with CTA to browse full catalog]\n\n→ Browse all episodes: {podcast_link}\n\n━━━━━━━━━━━\n\nFORMATTING RULES:\n- Use emoji sparingly (just the 📻 for episode markers)\n- Include line separators for visual hierarchy\n- Keep bullets SHORT (one line each)\n- Make episode links clearly visible\n- Maintain consistent structure across all episode cards\n\nOUTPUT: Complete newsletter section ready to paste into email tool. No preamble."
+    },
+
+    "newsletter_synthesis": {
+      "name": "Deep Dive Synthesis",
+      "channel": "newsletter",
+      "description": "Synthesize insights across multiple episodes to identify patterns and create new frameworks",
+      "target_length": "500-700 words",
+      "episode_selection": "multiple_ai_selected",
+
+      "base_prompt": "You are synthesizing insights across multiple OGC Podcast episodes to create a newsletter feature article.\n\nINPUT:\n- All episode transcripts from library: {all_transcripts}\n- Podcast page link: {podcast_link}\n- Tone: {selected_tone}\n\nTWO-STEP TASK:\n\nSTEP 1 - DISCOVERY (AI Selection):\nAnalyze ALL transcripts to identify a compelling theme or pattern. Look for:\n- Contradictions between guests (tension is interesting!)\n- Recurring tactics or principles across different domains\n- Surprising agreements between diverse experts\n- Evolving perspectives on a topic\n- Counter-intuitive insights that connect\n- Tactics mentioned by 2+ guests\n\nSelect 3-4 episodes that best illustrate this pattern.\n\nSTEP 2 - SYNTHESIS:\nCreate an article (500-700 words) that:\n1. Opens with the pattern you discovered (create intrigue)\n2. Weaves insights from selected episodes into a narrative\n3. Attributes insights to specific guests (quote when powerful)\n4. Creates a simple framework or mental model from the pattern\n5. Provides 2-3 actionable takeaways\n6. Links to all featured episodes\n\nCRITICAL SUCCESS FACTORS:\n- The theme should NOT be obvious (avoid 'the importance of retention')\n- Create NEW insight by connecting episodes (not just compilation)\n- Show disagreements or tensions when they exist (adds credibility)\n- The synthesis should be greater than the sum of parts\n- Framework should be simple enough to remember\n- Reader should feel they discovered something valuable",
+
+      "tone_modifiers": {
+        "straight_talk": "TONE: Straight Talk\n- Lead with the insight/framework immediately\n- Focus on actionable framework and tactics\n- Short sentences. Direct language.\n- Minimal storytelling, maximum utility\n- Example opening: 'Every successful growth team does 3 things differently. Here's the pattern I found:'\n- NOT: 'After analyzing many conversations, I've noticed an interesting trend...'",
+
+        "thinking_out_loud": "TONE: Thinking Out Loud\n- Share your process of connecting the dots\n- Show surprise when guests agreed/disagreed\n- Include your initial resistance or skepticism\n- Make it feel like a discovery journey\n- Example opening: 'I thought these three founders had nothing in common. Turns out they're all doing the same thing with onboarding—just different flavors:'\n- NOT: 'Upon careful analysis of multiple episodes, patterns emerged...'",
+
+        "pattern_spotter": "TONE: Pattern Spotter\n- Frame as emerging trend you're uniquely positioned to see\n- Emphasize the pattern recognition across conversations\n- Position yourself as curator with pattern-spotting superpower\n- Show how disparate insights connect\n- Example opening: 'Talk to enough growth leaders and patterns emerge. This one surprised me: the best teams all break the same rule about metrics.'\n- NOT: 'By examining the data from various interviews, I observed...'"
+      },
+
+      "anti_ai_slop_rules": "ANTI-AI-SLOP RULES:\n\n❌ NEVER use:\n- Generic themes ('The Importance of Data-Driven Decisions')\n- Listicles disguised as synthesis ('5 things I learned about...')\n- Academic language ('Upon analysis...', 'The data suggests...')\n- Obvious patterns everyone knows\n- 'Interestingly', 'Notably', 'Importantly'\n\n❌ AVOID:\n- Just summarizing episodes sequentially\n- Hiding the main insight (get to it fast)\n- Avoiding disagreement between guests (tension is good!)\n- Creating obvious frameworks ('Plan, Execute, Measure')\n- Forgetting to attribute specific insights to specific guests\n\n✅ REQUIRED:\n- Non-obvious theme or pattern\n- Specific guest attribution for each insight\n- At least one quote (when impactful)\n- Show disagreements when they exist\n- Create new perspective/framework\n- Actionable takeaways (what should reader do?)\n- Story arc with tension and resolution\n\n✅ GOOD THEMES:\n- 'Why the best teams ignore their north star metric'\n- 'The onboarding mistake every founder makes twice'\n- 'Why retention and acquisition are the same problem'\n\n✅ BAD THEMES:\n- 'The importance of retention'\n- 'Data-driven decision making in growth'\n- 'Best practices from successful founders'",
+
+      "format_instructions": "FORMAT:\n━━━━━━━━━━━\nTITLE: [Compelling, specific title that reveals the pattern]\n\n[Hook paragraph: What's the surprising pattern? Create intrigue. 2-3 sentences.]\n\n[Section 1: Introduce the pattern with first example]\n[Guest quote or specific insight]\n[Your analysis]\n\n[Section 2: Show how another guest approached it differently]\n[Guest quote or specific insight]\n[Connection to first example]\n\n[Section 3: Add tension - maybe one guest disagreed?]\n[Guest quote or specific insight]\n[Why the disagreement is interesting]\n\n[Section 4: Synthesis - what does this all mean?]\n[Your framework or mental model]\n[Why this matters]\n\n[Action steps: 2-3 specific things readers can try]\n1. [Specific action]\n2. [Specific action]\n3. [Specific action]\n\n━━━━━━━━━━━\nFEATURED EPISODES:\n(List the 3-4 episodes you selected and WHY you selected them)\n\n• [Guest 1] - [Episode title]: [One-line why it was selected]\n  → {episode_link}\n\n• [Guest 2] - [Episode title]: [One-line why it was selected]\n  → {episode_link}\n\n[Repeat for all selected episodes]\n\nBrowse more: {podcast_link}\n━━━━━━━━━━━\n\nFORMATTING RULES:\n- Use line separators for visual hierarchy\n- Include at least 1-2 direct quotes\n- Attribute every insight to specific guest\n- Keep paragraphs short (2-4 sentences)\n- Make framework/action steps clearly visible\n- Show your selection reasoning for episodes\n\nOUTPUT: Complete article ready to paste into newsletter. No preamble."
+    }
+
+  },
+
+  "tone_definitions": {
+    "straight_talk": {
+      "name": "Straight Talk",
+      "description": "No fluff or preambles. Short sentences. Direct statements. Conversational but efficient.",
+      "characteristics": [
+        "Maximum 15 words per sentence",
+        "Active voice only",
+        "No hedging words",
+        "Get to the point immediately",
+        "Focus on what to do, not what to think about"
+      ]
+    },
+    "thinking_out_loud": {
+      "name": "Thinking Out Loud",
+      "description": "Personal observations and reactions. Shows your thinking process. 'This made me rethink...' framing.",
+      "characteristics": [
+        "Frame as personal discovery",
+        "Show what changed your mind",
+        "Include initial skepticism or surprise",
+        "Make it feel like a conversation",
+        "Share what you're wrestling with"
+      ]
+    },
+    "pattern_spotter": {
+      "name": "Pattern Spotter",
+      "description": "Connects dots across conversations. 'I'm seeing this everywhere...' angle. Curator/synthesizer voice.",
+      "characteristics": [
+        "Reference multiple conversations",
+        "Position as emerging trend",
+        "Show pattern recognition",
+        "Emphasize unique perspective",
+        "Connect disparate insights"
+      ]
+    }
+  },
+
+  "channel_config": {
+    "linkedin": {
+      "name": "LinkedIn",
+      "enabled": true,
+      "content_types": ["linkedin_insight_post", "linkedin_contrarian", "linkedin_listicle"],
+      "best_practices": [
+        "First 2 lines (140 chars) must hook readers before 'see more'",
+        "Shorter is better (150-200 words sweet spot)",
+        "No hashtags (they look spammy)",
+        "Line breaks for readability",
+        "Always include CTA to drive podcast listens"
+      ]
+    },
+    "newsletter": {
+      "name": "Newsletter",
+      "enabled": true,
+      "content_types": ["newsletter_digest", "newsletter_synthesis"],
+      "best_practices": [
+        "Subject lines create FOMO or curiosity",
+        "Visual hierarchy crucial (use separators)",
+        "Scannable format (bullets, short paragraphs)",
+        "Multiple CTAs okay (one per episode)",
+        "Provide value subscribers can't get elsewhere"
+      ]
+    },
+    "twitter": {
+      "name": "Twitter",
+      "enabled": false,
+      "status": "coming_soon",
+      "content_types": [],
+      "planned_types": ["thread", "single_tweet", "quote_tweet"]
+    },
+    "instagram": {
+      "name": "Instagram",
+      "enabled": false,
+      "status": "coming_soon",
+      "content_types": [],
+      "planned_types": ["carousel", "story", "reel_script"]
+    }
+  }
+}

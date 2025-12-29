@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repurpose AI - Transform Podcast Content</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Repurpose AI</h1>
+                <p class="tagline">Transform podcasts into content</p>
+            </div>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="#" class="nav-link active" data-page="generate">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                        Generate
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="library">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                        Library
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="upload">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Upload
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="settings">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p class="version">v1.0.0</p>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Generate Page -->
+            <div id="page-generate" class="page active">
+                <div class="page-header">
+                    <h2>Generate Content</h2>
+                    <p class="subtitle">Transform your podcast episodes into social media content</p>
+                </div>
+
+                <div class="wizard">
+                    <!-- Progress Steps -->
+                    <div class="wizard-progress">
+                        <div class="progress-step active" data-step="1">
+                            <span class="step-number">1</span>
+                            <span class="step-label">Channel</span>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <span class="step-number">2</span>
+                            <span class="step-label">Content Type</span>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <span class="step-number">3</span>
+                            <span class="step-label">Tone</span>
+                        </div>
+                        <div class="progress-step" data-step="4">
+                            <span class="step-number">4</span>
+                            <span class="step-label">Episode</span>
+                        </div>
+                        <div class="progress-step" data-step="5">
+                            <span class="step-number">5</span>
+                            <span class="step-label">Generate</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Channel Selection -->
+                    <div class="wizard-step active" data-step="1">
+                        <h3>Select Channel</h3>
+                        <p class="step-description">Choose where you want to publish your content</p>
+
+                        <div class="options-grid" id="channel-options">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Content Type Selection -->
+                    <div class="wizard-step" data-step="2">
+                        <h3>Select Content Type</h3>
+                        <p class="step-description">Choose the format for your content</p>
+
+                        <div class="options-grid" id="content-type-options">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Tone Selection -->
+                    <div class="wizard-step" data-step="3">
+                        <h3>Select Tone</h3>
+                        <p class="step-description">Choose the voice and style for your content</p>
+
+                        <div class="options-grid" id="tone-options">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Episode Selection -->
+                    <div class="wizard-step" data-step="4">
+                        <h3>Select Episode</h3>
+                        <p class="step-description" id="episode-step-description">Choose an episode from your library</p>
+
+                        <div class="episode-selection" id="episode-selection">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Generate -->
+                    <div class="wizard-step" data-step="5">
+                        <h3>Generate Content</h3>
+                        <p class="step-description">Review your selections and generate</p>
+
+                        <div class="generation-summary" id="generation-summary">
+                            <!-- Populated by JavaScript -->
+                        </div>
+
+                        <button class="btn btn-primary btn-large" id="generate-btn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                            Generate Content
+                        </button>
+
+                        <!-- Loading State -->
+                        <div class="loading-state hidden" id="loading-state">
+                            <div class="spinner"></div>
+                            <p>Generating content with Claude AI...</p>
+                        </div>
+
+                        <!-- Result -->
+                        <div class="generation-result hidden" id="generation-result">
+                            <div class="result-header">
+                                <h4>Generated Content</h4>
+                                <button class="btn btn-secondary" id="copy-btn">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Copy
+                                </button>
+                            </div>
+                            <div class="result-content" id="result-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Wizard Navigation -->
+                    <div class="wizard-nav">
+                        <button class="btn btn-secondary" id="prev-btn" disabled>
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            Previous
+                        </button>
+                        <button class="btn btn-primary" id="next-btn">
+                            Next
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Page -->
+            <div id="page-library" class="page">
+                <div class="page-header">
+                    <h2>Episode Library</h2>
+                    <p class="subtitle">Browse and manage your podcast transcripts</p>
+                </div>
+
+                <div class="library-stats" id="library-stats">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <div class="episode-list" id="episode-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state hidden" id="library-empty">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <h3>No Episodes Yet</h3>
+                    <p>Upload your podcast transcripts to get started</p>
+                    <button class="btn btn-primary" onclick="showPage('upload')">Upload Transcripts</button>
+                </div>
+            </div>
+
+            <!-- Upload Page -->
+            <div id="page-upload" class="page">
+                <div class="page-header">
+                    <h2>Upload Transcripts</h2>
+                    <p class="subtitle">Add podcast transcripts to your library</p>
+                </div>
+
+                <div class="upload-zone" id="upload-zone">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h3>Drag & Drop Files</h3>
+                    <p>or click to browse</p>
+                    <p class="upload-hint">Supports .txt files up to 16MB</p>
+                    <input type="file" id="file-input" multiple accept=".txt" hidden>
+                </div>
+
+                <div class="upload-progress hidden" id="upload-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p id="upload-status">Uploading...</p>
+                </div>
+
+                <div class="upload-results hidden" id="upload-results">
+                    <h3>Upload Complete</h3>
+                    <div id="upload-results-list"></div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="page-settings" class="page">
+                <div class="page-header">
+                    <h2>Settings</h2>
+                    <p class="subtitle">Customize prompts and podcast information</p>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Podcast Information</h3>
+                    <div class="form-group">
+                        <label for="podcast-link">Default Podcast Link</label>
+                        <input type="url" id="podcast-link" placeholder="https://yourpodcast.com">
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Prompt Templates</h3>
+                    <p class="section-description">Edit the prompts used to generate content. Changes are saved automatically.</p>
+
+                    <div class="prompt-editor">
+                        <div class="prompt-selector">
+                            <label for="prompt-select">Select Prompt to Edit</label>
+                            <select id="prompt-select">
+                                <!-- Populated by JavaScript -->
+                            </select>
+                        </div>
+
+                        <div class="prompt-fields" id="prompt-fields">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button class="btn btn-primary" id="save-settings-btn">Save Changes</button>
+                    <button class="btn btn-secondary" id="reset-settings-btn">Reset to Defaults</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Episode Detail Modal -->
+    <div class="modal hidden" id="episode-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Episode Details</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input type="text" id="edit-title">
+                </div>
+                <div class="form-group">
+                    <label for="edit-guest">Guest Name</label>
+                    <input type="text" id="edit-guest">
+                </div>
+                <div class="form-group">
+                    <label for="edit-link">Episode Link</label>
+                    <input type="url" id="edit-link">
+                </div>
+                <div class="form-group">
+                    <label for="edit-notes">Notes</label>
+                    <textarea id="edit-notes" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Transcript Preview</label>
+                    <div class="transcript-preview" id="transcript-preview"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="delete-episode-btn">Delete</button>
+                <button class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                <button class="btn btn-primary" id="save-episode-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
