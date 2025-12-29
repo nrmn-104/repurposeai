@@ -396,6 +396,13 @@ def generate_content():
     if ct_info.get('episode_selection') == 'multiple_ai_selected':
         episodes_data = db.execute('SELECT * FROM episodes').fetchall()
     elif episode_ids:
+        # Ensure episode_ids are integers (they may come as strings from JSON)
+        try:
+            episode_ids = [int(eid) for eid in episode_ids]
+        except (ValueError, TypeError):
+            db.close()
+            return jsonify({'success': False, 'error': 'Invalid episode IDs'}), 400
+
         placeholders = ','.join('?' * len(episode_ids))
         episodes_data = db.execute(
             f'SELECT * FROM episodes WHERE id IN ({placeholders})',
