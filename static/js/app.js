@@ -876,18 +876,18 @@ async function handleFiles(files) {
 
 // Channel prefixes for prompt dropdown
 const channelPrefixes = {
-    'linkedin_single_episode': '💼 LinkedIn',
-    'linkedin_contrarian': '💼 LinkedIn',
-    'linkedin_listicle': '💼 LinkedIn',
-    'newsletter_monthly_digest': '📧 Newsletter',
-    'newsletter_deep_dive': '📧 Newsletter'
+    'linkedin_single_episode': 'LinkedIn',
+    'linkedin_contrarian': 'LinkedIn',
+    'linkedin_listicle': 'LinkedIn',
+    'newsletter_monthly_digest': 'Newsletter',
+    'newsletter_deep_dive': 'Newsletter'
 };
 
 function getChannelPrefix(key) {
-    if (key.startsWith('linkedin')) return '💼 LinkedIn';
-    if (key.startsWith('newsletter')) return '📧 Newsletter';
-    if (key.startsWith('twitter')) return '🐦 Twitter';
-    if (key.startsWith('instagram')) return '📸 Instagram';
+    if (key.startsWith('linkedin')) return 'LinkedIn';
+    if (key.startsWith('newsletter')) return 'Newsletter';
+    if (key.startsWith('twitter')) return 'Twitter';
+    if (key.startsWith('instagram')) return 'Instagram';
     return '';
 }
 
