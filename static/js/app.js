@@ -276,12 +276,34 @@ function renderWizard() {
     }
 }
 
+// Channel icons as SVG
+const channelIcons = {
+    linkedin: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+    newsletter: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>`,
+    twitter: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+    instagram: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
+};
+
+// Define channel order
+const channelOrder = ['linkedin', 'newsletter', 'twitter', 'instagram'];
+
 function renderChannelOptions() {
     const container = document.getElementById('channel-options');
-    container.innerHTML = state.channels.map(channel => `
-        <div class="option-card ${channel.enabled ? '' : 'disabled'} ${state.selectedChannel === channel.key ? 'selected' : ''}"
+
+    // Sort channels by predefined order
+    const sortedChannels = [...state.channels].sort((a, b) => {
+        const aIndex = channelOrder.indexOf(a.key);
+        const bIndex = channelOrder.indexOf(b.key);
+        return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+    });
+
+    container.innerHTML = sortedChannels.map(channel => `
+        <div class="option-card channel-card ${channel.enabled ? '' : 'disabled'} ${state.selectedChannel === channel.key ? 'selected' : ''}"
              data-channel="${channel.key}"
              ${channel.enabled ? '' : 'title="Coming soon"'}>
+            <div class="channel-icon ${channel.key}">
+                ${channelIcons[channel.key] || ''}
+            </div>
             <h4>${channel.name}</h4>
             <p>${channel.content_types.length} content type${channel.content_types.length !== 1 ? 's' : ''}</p>
             ${!channel.enabled ? '<span class="coming-soon">Coming Soon</span>' : ''}
@@ -509,10 +531,28 @@ async function handleRegenerate() {
 
 function toggleAdjustPanel() {
     const adjustPanel = document.getElementById('adjust-panel');
+    const contentWrapper = document.getElementById('result-content-wrapper');
+
     adjustPanel.classList.toggle('hidden');
+
     if (!adjustPanel.classList.contains('hidden')) {
+        // Show adjust panel - dim content
+        contentWrapper.classList.add('dimmed');
         document.getElementById('adjust-input').focus();
+    } else {
+        // Hide adjust panel - restore content
+        contentWrapper.classList.remove('dimmed');
     }
+}
+
+function cancelAdjust() {
+    const adjustPanel = document.getElementById('adjust-panel');
+    const contentWrapper = document.getElementById('result-content-wrapper');
+    const adjustInput = document.getElementById('adjust-input');
+
+    adjustPanel.classList.add('hidden');
+    contentWrapper.classList.remove('dimmed');
+    adjustInput.value = '';
 }
 
 async function handleAdjustContent() {
@@ -528,6 +568,7 @@ async function handleAdjustContent() {
     const resultContainer = document.getElementById('generation-result');
     const resultContent = document.getElementById('result-content');
     const adjustPanel = document.getElementById('adjust-panel');
+    const contentWrapper = document.getElementById('result-content-wrapper');
     const originalContent = resultContent.textContent;
 
     // Show loading
@@ -541,6 +582,7 @@ async function handleAdjustContent() {
             resultContent.textContent = result.content;
             resultContainer.classList.remove('hidden');
             adjustPanel.classList.add('hidden');
+            contentWrapper.classList.remove('dimmed');
             adjustInput.value = '';
             showToast('Content adjusted!', 'success');
         } else {
@@ -832,23 +874,49 @@ async function handleFiles(files) {
 // SETTINGS PAGE
 // ==============================================================================
 
+// Channel prefixes for prompt dropdown
+const channelPrefixes = {
+    'linkedin_single_episode': '💼 LinkedIn',
+    'linkedin_contrarian': '💼 LinkedIn',
+    'linkedin_listicle': '💼 LinkedIn',
+    'newsletter_monthly_digest': '📧 Newsletter',
+    'newsletter_deep_dive': '📧 Newsletter'
+};
+
+function getChannelPrefix(key) {
+    if (key.startsWith('linkedin')) return '💼 LinkedIn';
+    if (key.startsWith('newsletter')) return '📧 Newsletter';
+    if (key.startsWith('twitter')) return '🐦 Twitter';
+    if (key.startsWith('instagram')) return '📸 Instagram';
+    return '';
+}
+
 function renderSettings() {
     // Set podcast link
     document.getElementById('podcast-link').value =
         state.prompts.default_podcast_link || '';
 
-    // Populate prompt selector
+    // Populate prompt selector with channel prefixes
     const promptSelect = document.getElementById('prompt-select');
     const contentTypes = state.prompts.content_types || {};
 
-    promptSelect.innerHTML = Object.keys(contentTypes).map(key => {
+    // Sort content types by channel
+    const sortedKeys = Object.keys(contentTypes).sort((a, b) => {
+        const aPrefix = getChannelPrefix(a);
+        const bPrefix = getChannelPrefix(b);
+        return aPrefix.localeCompare(bPrefix);
+    });
+
+    promptSelect.innerHTML = sortedKeys.map(key => {
         const ct = contentTypes[key];
-        return `<option value="${key}">${ct.name}</option>`;
+        const prefix = getChannelPrefix(key);
+        const displayName = prefix ? `${prefix}: ${ct.name}` : ct.name;
+        return `<option value="${key}">${displayName}</option>`;
     }).join('');
 
     // Load first prompt
-    if (Object.keys(contentTypes).length > 0) {
-        renderPromptEditor(Object.keys(contentTypes)[0]);
+    if (sortedKeys.length > 0) {
+        renderPromptEditor(sortedKeys[0]);
     }
 
     // Add change handler
@@ -856,6 +924,13 @@ function renderSettings() {
         renderPromptEditor(e.target.value);
     });
 }
+
+// Tooltip definitions for prompt fields
+const promptTooltips = {
+    'base_prompt': 'Core instructions that define what content to generate',
+    'anti_ai_slop_rules': 'Rules to prevent generic AI-sounding language',
+    'format_instructions': 'Define the structure and formatting of output'
+};
 
 function renderPromptEditor(contentTypeKey) {
     const container = document.getElementById('prompt-fields');
@@ -868,16 +943,25 @@ function renderPromptEditor(contentTypeKey) {
 
     container.innerHTML = `
         <div class="form-group">
-            <label for="edit-base-prompt">Base Prompt</label>
-            <textarea id="edit-base-prompt" rows="10" data-field="base_prompt">${contentType.base_prompt || ''}</textarea>
+            <label for="edit-base-prompt">
+                <span>Base Prompt</span>
+                <span class="tooltip-icon" data-tooltip="${promptTooltips.base_prompt}">?</span>
+            </label>
+            <textarea id="edit-base-prompt" data-field="base_prompt">${contentType.base_prompt || ''}</textarea>
         </div>
         <div class="form-group">
-            <label for="edit-anti-slop">Anti-AI Slop Rules</label>
-            <textarea id="edit-anti-slop" rows="8" data-field="anti_ai_slop_rules">${contentType.anti_ai_slop_rules || ''}</textarea>
+            <label for="edit-anti-slop">
+                <span>Anti-AI Slop Rules</span>
+                <span class="tooltip-icon" data-tooltip="${promptTooltips.anti_ai_slop_rules}">?</span>
+            </label>
+            <textarea id="edit-anti-slop" data-field="anti_ai_slop_rules">${contentType.anti_ai_slop_rules || ''}</textarea>
         </div>
         <div class="form-group">
-            <label for="edit-format">Format Instructions</label>
-            <textarea id="edit-format" rows="8" data-field="format_instructions">${contentType.format_instructions || ''}</textarea>
+            <label for="edit-format">
+                <span>Format Instructions</span>
+                <span class="tooltip-icon" data-tooltip="${promptTooltips.format_instructions}">?</span>
+            </label>
+            <textarea id="edit-format" data-field="format_instructions">${contentType.format_instructions || ''}</textarea>
         </div>
     `;
 }
@@ -942,6 +1026,15 @@ async function init() {
         loadPrompts()
     ]);
 
+    // Set up logo click handler - navigate to home/generate page
+    const logoLink = document.getElementById('logo-link');
+    if (logoLink) {
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('generate');
+        });
+    }
+
     // Set up navigation
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
@@ -958,6 +1051,7 @@ async function init() {
     document.getElementById('regenerate-btn').addEventListener('click', handleRegenerate);
     document.getElementById('adjust-btn').addEventListener('click', toggleAdjustPanel);
     document.getElementById('submit-adjust-btn').addEventListener('click', handleAdjustContent);
+    document.getElementById('cancel-adjust-btn').addEventListener('click', cancelAdjust);
 
     // Allow Enter key to submit adjustment
     document.getElementById('adjust-input').addEventListener('keypress', (e) => {
