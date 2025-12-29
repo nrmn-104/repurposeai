@@ -7,9 +7,12 @@ __pycache__/
 *$py.class
 .pythonlibs/
 
-# Database
+# Database (old location - can be removed)
 instance/
-*.db
+
+# Note: data/repurpose.db is NOT ignored so it can optionally be committed
+# If you want to ignore the database, uncomment the next line:
+# data/*.db
 
 # Uploads
 uploads/

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repurpose AI - Transform Podcast Content</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -31,16 +33,6 @@
                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                         </svg>
                         Library
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link" data-page="upload">
-                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                        Upload
                     </a>
                 </li>
                 <li>
@@ -159,15 +151,40 @@
                         <div class="generation-result hidden" id="generation-result">
                             <div class="result-header">
                                 <h4>Generated Content</h4>
-                                <button class="btn btn-secondary" id="copy-btn">
-                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                    Copy
-                                </button>
+                                <div class="result-actions">
+                                    <button class="btn btn-secondary" id="copy-btn">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                        Copy
+                                    </button>
+                                    <button class="btn btn-secondary" id="regenerate-btn">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M23 4v6h-6"></path>
+                                            <path d="M1 20v-6h6"></path>
+                                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                                        </svg>
+                                        Regenerate
+                                    </button>
+                                    <button class="btn btn-secondary" id="adjust-btn">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                        Adjust Content
+                                    </button>
+                                </div>
                             </div>
                             <div class="result-content" id="result-content"></div>
+
+                            <!-- Adjust Content Panel -->
+                            <div class="adjust-panel hidden" id="adjust-panel">
+                                <div class="adjust-input-group">
+                                    <input type="text" id="adjust-input" placeholder="What would you like to adjust? (e.g., 'make it shorter', 'add more data points')">
+                                    <button class="btn btn-primary" id="submit-adjust-btn">Regenerate with Changes</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -194,8 +211,49 @@
             <!-- Library Page -->
             <div id="page-library" class="page">
                 <div class="page-header">
-                    <h2>Episode Library</h2>
-                    <p class="subtitle">Browse and manage your podcast transcripts</p>
+                    <div class="page-header-row">
+                        <div>
+                            <h2>Episode Library</h2>
+                            <p class="subtitle">Browse and manage your podcast transcripts</p>
+                        </div>
+                        <button class="btn btn-primary" id="upload-btn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Upload Transcripts
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upload Section (hidden by default) -->
+                <div class="upload-section hidden" id="upload-section">
+                    <div class="upload-section-header">
+                        <h3>Upload Transcripts</h3>
+                        <button class="btn btn-secondary btn-small" id="close-upload-btn">Cancel</button>
+                    </div>
+                    <div class="upload-zone" id="upload-zone">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <h3>Drag & Drop Files</h3>
+                        <p>or click to browse</p>
+                        <p class="upload-hint">Supports .txt files up to 16MB</p>
+                        <input type="file" id="file-input" multiple accept=".txt" hidden>
+                    </div>
+                    <div class="upload-progress hidden" id="upload-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p id="upload-status">Uploading...</p>
+                    </div>
+                    <div class="upload-results hidden" id="upload-results">
+                        <h4>Upload Complete</h4>
+                        <div id="upload-results-list"></div>
+                    </div>
                 </div>
 
                 <div class="library-stats" id="library-stats">
@@ -214,39 +272,7 @@
                     </svg>
                     <h3>No Episodes Yet</h3>
                     <p>Upload your podcast transcripts to get started</p>
-                    <button class="btn btn-primary" onclick="showPage('upload')">Upload Transcripts</button>
-                </div>
-            </div>
-
-            <!-- Upload Page -->
-            <div id="page-upload" class="page">
-                <div class="page-header">
-                    <h2>Upload Transcripts</h2>
-                    <p class="subtitle">Add podcast transcripts to your library</p>
-                </div>
-
-                <div class="upload-zone" id="upload-zone">
-                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                    </svg>
-                    <h3>Drag & Drop Files</h3>
-                    <p>or click to browse</p>
-                    <p class="upload-hint">Supports .txt files up to 16MB</p>
-                    <input type="file" id="file-input" multiple accept=".txt" hidden>
-                </div>
-
-                <div class="upload-progress hidden" id="upload-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
-                    </div>
-                    <p id="upload-status">Uploading...</p>
-                </div>
-
-                <div class="upload-results hidden" id="upload-results">
-                    <h3>Upload Complete</h3>
-                    <div id="upload-results-list"></div>
+                    <button class="btn btn-primary" id="empty-upload-btn">Upload Transcripts</button>
                 </div>
             </div>
 

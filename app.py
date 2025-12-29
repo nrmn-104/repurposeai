@@ -19,11 +19,15 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-app.config['DATABASE'] = 'instance/repurpose.db'
+
+# Use 'data' directory for persistent storage (survives Replit deployments)
+# The 'data' folder persists across deployments in Replit
+DATA_DIR = Path('data')
+DATA_DIR.mkdir(exist_ok=True)
+app.config['DATABASE'] = str(DATA_DIR / 'repurpose.db')
 
 # Ensure directories exist
 Path('uploads').mkdir(exist_ok=True)
-Path('instance').mkdir(exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'txt'}
 
@@ -421,6 +425,48 @@ def generate_content():
                 'content_type': content_type,
                 'tone': tone,
                 'episodes_used': len(episodes)
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': result['error']
+            }), 500
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/adjust', methods=['POST'])
+def adjust_content():
+    """Adjust previously generated content based on user feedback."""
+    data = request.json
+
+    original_content = data.get('original_content')
+    adjustment = data.get('adjustment')
+
+    if not original_content or not adjustment:
+        return jsonify({'success': False, 'error': 'Missing original_content or adjustment'}), 400
+
+    # Build adjustment prompt
+    adjust_prompt = f"""Here is content I previously generated:
+
+---
+{original_content}
+---
+
+The user wants this adjustment: {adjustment}
+
+Please regenerate the content with this adjustment applied. Keep the same general format and style, but apply the requested changes. Output only the adjusted content, no explanations or preamble."""
+
+    try:
+        result = generate_content_with_claude(adjust_prompt)
+
+        if result['success']:
+            return jsonify({
+                'success': True,
+                'content': result['content']
             })
         else:
             return jsonify({

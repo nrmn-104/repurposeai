@@ -90,6 +90,17 @@ async function generateContent() {
     return result;
 }
 
+async function adjustContent(originalContent, adjustment) {
+    const result = await api('/adjust', {
+        method: 'POST',
+        body: JSON.stringify({
+            original_content: originalContent,
+            adjustment: adjustment
+        })
+    });
+    return result;
+}
+
 async function updateEpisode(id, data) {
     return api(`/episodes/${id}`, {
         method: 'PUT',
@@ -439,11 +450,13 @@ async function handleGenerate() {
     const loadingState = document.getElementById('loading-state');
     const resultContainer = document.getElementById('generation-result');
     const resultContent = document.getElementById('result-content');
+    const adjustPanel = document.getElementById('adjust-panel');
 
     // Show loading
     generateBtn.classList.add('hidden');
     loadingState.classList.remove('hidden');
     resultContainer.classList.add('hidden');
+    adjustPanel.classList.add('hidden');
 
     try {
         const result = await generateContent();
@@ -459,6 +472,84 @@ async function handleGenerate() {
     } catch (error) {
         showToast('An error occurred: ' + error.message, 'error');
         generateBtn.classList.remove('hidden');
+    } finally {
+        loadingState.classList.add('hidden');
+    }
+}
+
+async function handleRegenerate() {
+    const loadingState = document.getElementById('loading-state');
+    const resultContainer = document.getElementById('generation-result');
+    const resultContent = document.getElementById('result-content');
+    const adjustPanel = document.getElementById('adjust-panel');
+
+    // Show loading
+    loadingState.classList.remove('hidden');
+    resultContainer.classList.add('hidden');
+    adjustPanel.classList.add('hidden');
+
+    try {
+        const result = await generateContent();
+
+        if (result.success) {
+            resultContent.textContent = result.content;
+            resultContainer.classList.remove('hidden');
+            showToast('Content regenerated!', 'success');
+        } else {
+            showToast(result.error || 'Failed to regenerate content', 'error');
+            resultContainer.classList.remove('hidden');
+        }
+    } catch (error) {
+        showToast('An error occurred: ' + error.message, 'error');
+        resultContainer.classList.remove('hidden');
+    } finally {
+        loadingState.classList.add('hidden');
+    }
+}
+
+function toggleAdjustPanel() {
+    const adjustPanel = document.getElementById('adjust-panel');
+    adjustPanel.classList.toggle('hidden');
+    if (!adjustPanel.classList.contains('hidden')) {
+        document.getElementById('adjust-input').focus();
+    }
+}
+
+async function handleAdjustContent() {
+    const adjustInput = document.getElementById('adjust-input');
+    const adjustment = adjustInput.value.trim();
+
+    if (!adjustment) {
+        showToast('Please enter what you want to adjust', 'warning');
+        return;
+    }
+
+    const loadingState = document.getElementById('loading-state');
+    const resultContainer = document.getElementById('generation-result');
+    const resultContent = document.getElementById('result-content');
+    const adjustPanel = document.getElementById('adjust-panel');
+    const originalContent = resultContent.textContent;
+
+    // Show loading
+    loadingState.classList.remove('hidden');
+    resultContainer.classList.add('hidden');
+
+    try {
+        const result = await adjustContent(originalContent, adjustment);
+
+        if (result.success) {
+            resultContent.textContent = result.content;
+            resultContainer.classList.remove('hidden');
+            adjustPanel.classList.add('hidden');
+            adjustInput.value = '';
+            showToast('Content adjusted!', 'success');
+        } else {
+            showToast(result.error || 'Failed to adjust content', 'error');
+            resultContainer.classList.remove('hidden');
+        }
+    } catch (error) {
+        showToast('An error occurred: ' + error.message, 'error');
+        resultContainer.classList.remove('hidden');
     } finally {
         loadingState.classList.add('hidden');
     }
@@ -604,12 +695,24 @@ async function handleDeleteEpisode() {
 }
 
 // ==============================================================================
-// UPLOAD PAGE
+// UPLOAD FUNCTIONALITY (in Library page)
 // ==============================================================================
+
+function showUploadSection() {
+    document.getElementById('upload-section').classList.remove('hidden');
+    document.getElementById('upload-results').classList.add('hidden');
+    document.getElementById('upload-progress').classList.add('hidden');
+}
+
+function hideUploadSection() {
+    document.getElementById('upload-section').classList.add('hidden');
+}
 
 function initUpload() {
     const uploadZone = document.getElementById('upload-zone');
     const fileInput = document.getElementById('file-input');
+
+    if (!uploadZone || !fileInput) return;
 
     // Click to upload
     uploadZone.addEventListener('click', () => {
@@ -637,6 +740,24 @@ function initUpload() {
         handleFiles(e.target.files);
         fileInput.value = ''; // Reset for next upload
     });
+
+    // Upload button in header
+    const uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', showUploadSection);
+    }
+
+    // Empty state upload button
+    const emptyUploadBtn = document.getElementById('empty-upload-btn');
+    if (emptyUploadBtn) {
+        emptyUploadBtn.addEventListener('click', showUploadSection);
+    }
+
+    // Close upload button
+    const closeUploadBtn = document.getElementById('close-upload-btn');
+    if (closeUploadBtn) {
+        closeUploadBtn.addEventListener('click', hideUploadSection);
+    }
 }
 
 async function handleFiles(files) {
@@ -668,7 +789,7 @@ async function handleFiles(files) {
         progressFill.style.width = '100%';
 
         // Show results
-        setTimeout(() => {
+        setTimeout(async () => {
             progressContainer.classList.add('hidden');
             resultsContainer.classList.remove('hidden');
 
@@ -686,11 +807,17 @@ async function handleFiles(files) {
 
             resultsList.innerHTML = resultsHtml;
 
-            // Reload episodes
-            loadEpisodes();
+            // Reload episodes and re-render library
+            await loadEpisodes();
+            renderLibrary();
 
             if (result.uploaded && result.uploaded.length > 0) {
                 showToast(`Uploaded ${result.uploaded.length} file(s)`, 'success');
+
+                // Auto-hide upload section after 2 seconds
+                setTimeout(() => {
+                    hideUploadSection();
+                }, 2000);
             }
         }, 500);
 
@@ -828,6 +955,16 @@ async function init() {
     document.getElementById('prev-btn').addEventListener('click', prevStep);
     document.getElementById('generate-btn').addEventListener('click', handleGenerate);
     document.getElementById('copy-btn').addEventListener('click', handleCopy);
+    document.getElementById('regenerate-btn').addEventListener('click', handleRegenerate);
+    document.getElementById('adjust-btn').addEventListener('click', toggleAdjustPanel);
+    document.getElementById('submit-adjust-btn').addEventListener('click', handleAdjustContent);
+
+    // Allow Enter key to submit adjustment
+    document.getElementById('adjust-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleAdjustContent();
+        }
+    });
 
     // Set up modal
     document.getElementById('modal-close').addEventListener('click', closeEpisodeModal);

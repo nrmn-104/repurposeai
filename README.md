@@ -11,13 +11,14 @@ Repurpose AI is a local web application that helps podcasters and content creato
 ### Features
 
 - **Bulk Upload**: Upload multiple .txt transcript files at once
-- **Persistent Library**: All transcripts stored in a local SQLite database
+- **Persistent Library**: All transcripts stored in a SQLite database that persists across deployments
 - **5-Step Wizard**: Simple guided process to generate content
 - **Multiple Content Types**:
   - LinkedIn: Single-Episode Insight Post, Contrarian Take, Listicle/Framework
   - Newsletter: Monthly Digest, Deep Dive Synthesis
 - **3 Tone Options**: Straight Talk, Thinking Out Loud, Pattern Spotter
 - **AI Episode Selection**: For synthesis content, Claude automatically selects relevant episodes
+- **Regenerate & Adjust**: Regenerate content or adjust with specific instructions
 - **Editable Prompts**: Customize all prompts via the Settings page
 - **Copy & Post**: One-click copy for easy posting
 
@@ -124,9 +125,10 @@ That's it! You're ready to use Repurpose AI.
 
 ### 1. Upload Transcripts
 
-1. Click **Upload** in the sidebar
-2. Drag and drop your .txt transcript files, or click to browse
-3. Files are automatically saved to your library
+1. Click **Library** in the sidebar
+2. Click the **Upload Transcripts** button at the top
+3. Drag and drop your .txt transcript files, or click to browse
+4. Files are automatically saved to your library
 
 **Tip**: Name your files descriptively, like `Episode-42-John-Smith.txt`. The app will try to extract the episode title and guest name from the filename.
 
@@ -149,7 +151,14 @@ That's it! You're ready to use Repurpose AI.
    - **Step 4**: Select episode(s) — or let AI choose for synthesis content
    - **Step 5**: Click Generate and copy the result
 
-### 4. Customize Prompts
+### 4. Refine Generated Content
+
+After content is generated, you have three options:
+- **Copy**: Copy the content to clipboard
+- **Regenerate**: Generate completely new content with the same settings
+- **Adjust Content**: Enter specific adjustments (e.g., "make it shorter", "add more data points") and regenerate
+
+### 5. Customize Prompts
 
 1. Click **Settings** in the sidebar
 2. Update your podcast link (used in all generated content)
@@ -245,14 +254,15 @@ repurposeai/
 ├── requirements.txt    # Python dependencies
 ├── .env               # Your API key (create from .env.example)
 ├── .env.example       # Template for environment variables
-├── instance/          # Database storage (auto-created)
-│   └── repurpose.db
+├── data/              # Persistent database storage
+│   └── repurpose.db   # SQLite database (persists across Replit deployments)
 ├── uploads/           # Temporary upload storage
 ├── static/
 │   ├── css/
 │   │   └── style.css  # Application styles
-│   └── js/
-│       └── app.js     # Frontend JavaScript
+│   ├── js/
+│   │   └── app.js     # Frontend JavaScript
+│   └── favicon.svg    # Application favicon
 └── templates/
     └── index.html     # Main HTML template
 ```
@@ -282,13 +292,19 @@ For production, set `debug=False` in `app.py` and change the `SECRET_KEY` in `.e
 
 ### Database
 
-The SQLite database is stored at `instance/repurpose.db`. To reset:
+The SQLite database is stored at `data/repurpose.db`. This location was chosen to persist across Replit deployments.
+
+**For Replit users**: The `data/` folder persists across deployments, so your uploaded transcripts won't be lost when you redeploy.
+
+To reset the database:
 
 ```bash
-rm instance/repurpose.db
+rm data/repurpose.db
 ```
 
 The database will be recreated when you restart the app.
+
+**Note**: The database is NOT ignored by git, so you can optionally commit it to preserve your transcripts. If you prefer not to commit the database, add `data/*.db` to your `.gitignore`.
 
 ---
 
