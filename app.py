@@ -455,8 +455,8 @@ if __name__ == '__main__':
     print("\n" + "="*60)
     print("  REPURPOSE AI - Podcast Content Repurposing Tool")
     print("="*60)
-    print("\n  Starting server at: http://localhost:5001")
+    print("\n  Starting server at: http://0.0.0.0:5000")
     print("  Press Ctrl+C to stop\n")
     print("="*60 + "\n")
 
-    app.run(debug=True, port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5000)

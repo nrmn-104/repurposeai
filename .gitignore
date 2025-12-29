@@ -3,6 +3,9 @@
 venv/
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+.pythonlibs/
 
 # Database
 instance/
