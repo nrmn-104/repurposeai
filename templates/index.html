@@ -13,7 +13,9 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="sidebar-header">
-                <h1 class="logo">Repurpose AI</h1>
+                <a href="#" class="logo-link" id="logo-link">
+                    <h1 class="logo">Repurpose AI</h1>
+                </a>
                 <p class="tagline">Transform podcasts into content</p>
             </div>
 
@@ -176,14 +178,23 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="result-content" id="result-content"></div>
 
-                            <!-- Adjust Content Panel -->
+                            <!-- Adjust Content Panel - Now positioned above content -->
                             <div class="adjust-panel hidden" id="adjust-panel">
                                 <div class="adjust-input-group">
                                     <input type="text" id="adjust-input" placeholder="What would you like to adjust? (e.g., 'make it shorter', 'add more data points')">
                                     <button class="btn btn-primary" id="submit-adjust-btn">Regenerate with Changes</button>
+                                    <button class="btn btn-secondary btn-cancel-adjust" id="cancel-adjust-btn" title="Cancel">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
                                 </div>
+                            </div>
+
+                            <div class="result-content-wrapper" id="result-content-wrapper">
+                                <div class="result-content" id="result-content"></div>
                             </div>
                         </div>
                     </div>
@@ -297,8 +308,8 @@
 
                     <div class="prompt-editor">
                         <div class="prompt-selector">
-                            <label for="prompt-select">Select Prompt to Edit</label>
-                            <select id="prompt-select">
+                            <label class="prompt-select-label" for="prompt-select">Select Template to Edit</label>
+                            <select id="prompt-select" class="prompt-select-enhanced">
                                 <!-- Populated by JavaScript -->
                             </select>
                         </div>

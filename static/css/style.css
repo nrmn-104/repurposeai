@@ -92,11 +92,27 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+.logo-link {
+    text-decoration: none;
+    display: block;
+    transition: opacity var(--transition-fast);
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
+.logo-link:hover .logo {
+    color: var(--accent-primary);
+}
+
 .logo {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: var(--spacing-xs);
+    cursor: pointer;
+    transition: color var(--transition-fast);
 }
 
 .tagline {
@@ -409,6 +425,52 @@ body {
     margin-top: var(--spacing-sm);
 }
 
+/* Channel Cards with Icons */
+.channel-card {
+    text-align: center;
+}
+
+.channel-card .channel-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    padding: var(--spacing-sm);
+}
+
+.channel-card .channel-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.channel-card .channel-icon.linkedin {
+    color: #0A66C2;
+}
+
+.channel-card .channel-icon.newsletter {
+    color: var(--accent-primary);
+}
+
+.channel-card .channel-icon.twitter {
+    color: var(--text-muted);
+}
+
+.channel-card .channel-icon.instagram {
+    color: var(--text-muted);
+}
+
+.channel-card.disabled .channel-icon {
+    opacity: 0.5;
+}
+
+.channel-card h4 {
+    margin-top: var(--spacing-xs);
+}
+
 /* Episode Selection */
 .episode-selection {
     max-height: 400px;
@@ -546,16 +608,44 @@ body {
     overflow-y: auto;
 }
 
-/* Adjust Panel */
+/* Result Content Wrapper */
+.result-content-wrapper {
+    transition: opacity 0.3s ease;
+}
+
+.result-content-wrapper.dimmed {
+    opacity: 0.7;
+}
+
+/* Adjust Panel - Positioned above content */
 .adjust-panel {
     padding: var(--spacing-md);
-    border-top: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    background: var(--accent-muted);
+    border-bottom: 1px solid var(--accent-primary);
+    opacity: 0;
+    animation: fadeInAdjust 0.3s ease forwards;
+}
+
+.adjust-panel.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+@keyframes fadeInAdjust {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .adjust-input-group {
     display: flex;
     gap: var(--spacing-sm);
+    align-items: center;
 }
 
 .adjust-input-group input {
@@ -575,6 +665,16 @@ body {
 
 .adjust-input-group input::placeholder {
     color: var(--text-muted);
+}
+
+.btn-cancel-adjust {
+    padding: var(--spacing-sm);
+    min-width: auto;
+}
+
+.btn-cancel-adjust .btn-icon {
+    width: 14px;
+    height: 14px;
 }
 
 /* ==============================================================================
@@ -845,11 +945,115 @@ body {
 }
 
 .prompt-selector {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
+/* Enhanced Prompt Dropdown */
+.prompt-select-label {
+    display: block;
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    margin-bottom: var(--spacing-md) !important;
+    color: var(--text-primary);
+}
+
+.prompt-select-enhanced {
+    height: 48px;
+    font-size: 1rem !important;
+    border: 2px solid #3B82F6 !important;
+    padding: var(--spacing-md) !important;
+    cursor: pointer;
+}
+
+.prompt-select-enhanced:hover {
+    border-color: var(--accent-hover) !important;
+}
+
+.prompt-select-enhanced:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+/* Prompt Fields with Tooltips and Larger Textareas */
 .prompt-fields .form-group label {
-    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.prompt-fields .form-group label span {
+    font-weight: 500;
+}
+
+/* Tooltip Styles */
+.tooltip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: help;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.tooltip-icon:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.tooltip-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    z-index: 100;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip-icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Large Textareas for Prompts */
+.prompt-fields textarea {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.prompt-fields textarea#edit-base-prompt {
+    min-height: 400px;
+}
+
+.prompt-fields textarea#edit-anti-slop {
+    min-height: 300px;
+}
+
+.prompt-fields textarea#edit-format {
+    min-height: 250px;
 }
 
 .settings-actions {
